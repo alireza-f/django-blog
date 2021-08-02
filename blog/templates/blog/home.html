@@ -8,4 +8,8 @@
 {% include 'blog/post_section.html' %}
 {% endfor %}
 {% endif %}
+<nav class="blog-pagination" aria-label="Pagination">
+        <a class="btn btn-outline-primary" href="#"> قدیمی‌تر </a>
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true"> جدیدتر </a>
+      </nav>
 {% endblock content %}

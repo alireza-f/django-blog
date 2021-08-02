@@ -1,10 +1,11 @@
-from django.db import models
+from django.db import connection, models
 from blog.models import Post
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Post, Category, ShortIntro
 import datetime
 from django.views.generic import DetailView
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -27,10 +28,13 @@ def home(request):
 
 def year_archive(request, year):
     a_list = Post.objects.filter(created_at__year=year)
+    # a_list = get_object_or_404(Post, created_at__year=year)
+    # if not a_list:
+    #     return HttpResponse('<h1>Error 404</h1>')
     context = {
-        'year' : year,
-        'yearly_archive' : a_list,
-    }
+            'year' : year,
+            'yearly_archive' : a_list,
+        }
     return render(request, 'blog/year_archive.html', context)
 
 def month_archive(request, year, month):
@@ -60,7 +64,26 @@ def category_posts(request, eng_title):
 
 
 
-class PostDetailView(DetailView):
-    model = Post
-    context_object_name = 'post'
+def post_detail(request, slug):
     template_name = 'blog/post_detail.html'
+    post = get_object_or_404(Post, slug=slug)
+    comments = post.comments.filter(is_active=True)
+    new_comment = None
+    # Comment posted
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.post = post
+            # Save the comment to the database
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
+    return render(request, template_name, {'post': post,
+                                           'comments': comments,
+                                           'new_comment': new_comment,
+                                           'comment_form': comment_form})

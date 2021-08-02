@@ -3,11 +3,15 @@
 {%block title%} آرشیو ماهانه {{ month_name }} در سال {{year}} {%endblock title%}
 
 {% block content %}
-<h1>پست‌های ماه {{ month_name }}</h1>
 
 
 <br/>
+{% if month_archive %}
+<h1>پست‌های ماه {{ month_name }}</h1>
 {% for post in month_archive %}
     {% include 'blog/post_section.html' %}
 {% endfor %}
+{% else %}
+ <h1>متاسفانه برای ماه {{ month_name }} پستی وجود نداره</h1>
+{% endif %}
 {% endblock content %}

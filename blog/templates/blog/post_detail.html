@@ -1,4 +1,6 @@
 {% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+
 {% load jformat %}
 {% block title %} وبلاگ {% endblock title %}
 
@@ -6,5 +8,42 @@
 
 {% if post %}
 {% include 'blog/post_section.html' %}
+
+
+<div class="container">
+	<div class="row">
+		<h5>کامنت‌ها ({{ comments.count }})</h5>
+	</div>
+	
+	<hr>
+    {% for comment in comments %}
+	<div class="row comment">
+	    <div class="head">
+	        <small><strong class='user'>{{ comment.name }}</strong> {{ comment.created_at|jformat:"%A %d %B %Y"}}</small>
+	    </div>    
+	    <p>{{ comment.content| linebreaks }}</p>
+	</div>
+    {% endfor %}
+	<hr>
+<div class="row" id="addcomment">
+	    
+    {% if new_comment %}
+    <div class="alert alert-success" role="alert">
+        کامنت شما در انتظار تایید است.
+    </div>
+    {% else %}
+    
+    <form method="post" style="margin-top: 1.3em;">
+    <h5>ارسال کامنت</h5>
+        {{ comment_form|crispy|linebreaksbr }}
+        {% csrf_token %}
+        <br/>
+        <button type="submit" class="btn btn-primary btn-md">ثبت کامنت</button>
+    </form>
+    {% endif %}
+    </div>
+    
+</div>
+<br/>
 {% endif %}
 {% endblock content %}

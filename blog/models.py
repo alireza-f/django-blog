@@ -34,16 +34,15 @@ class Category(models.Model):
 
 
 
-
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name="عنوان پست")
     slug = models.SlugField(max_length=255)
     content = RichTextField(verbose_name="محتوای پست")
     category = models.ForeignKey(Category, verbose_name="انتخاب دسته‌بندی پست", on_delete=models.CASCADE)
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        default=1,
+        User,
         on_delete=models.CASCADE,
+        verbose_name='نویسنده'
     )
     created_at = jmodels.jDateTimeField(auto_now_add=True, verbose_name="ایجاد شده در تاریخ")
     updated_at = jmodels.jDateTimeField(auto_now=True, verbose_name="ویرایش شده در تاریخ")
@@ -82,3 +81,22 @@ class ShortIntro(models.Model):
 
     def __str__(self):
         return self.title
+
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    name = models.CharField(max_length=50, blank=False)
+    email = models.EmailField(max_length=254, blank=False)
+    content = models.TextField(max_length=500, blank=False)
+    is_active = models.BooleanField(default=False, verbose_name='تایید شده')
+    created_at = jmodels.jDateTimeField(auto_now_add=True, null=True, blank=True, editable=False, verbose_name='تاریخ ارسال')
+
+    class Meta:
+        ordering = ['created_at']
+        verbose_name = 'کامنت'
+        verbose_name_plural = 'کامنت‌ها'
+
+
+    def __str__(self):
+        return f'کامنت {self.content} توسط کاربر {self.name}'

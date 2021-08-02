@@ -1,11 +1,60 @@
 from django.contrib import admin
 from django.db import models
-from blog.models import Post, Category, ShortIntro
+from blog.models import Post, Category, ShortIntro, Comment
 from django_jalali.admin.filters import JDateFieldListFilter
 import django_jalali.admin as jadmin
 
 
+class ShortIntroAdmin(admin.ModelAdmin):
+    def has_add_permission(self, request):
+        return False
+    
+
+class CommentInline(admin.StackedInline):
+    model = Comment
+    classes = ['collapse']
+    fieldsets = [
+    ('Start Expanded', {
+    'fields': ['name', 'email', 'content'], 
+    'classes': ['collapse in',]
+    })
+]
+
+
+
+class CommentAdmin(admin.ModelAdmin):
+    def jalali_date(self, obj):
+        return obj.created_at.strftime("%d %b %Y %H:%M")
+    jalali_date.admin_order_field = 'created_at'
+    jalali_date.short_description = 'تاریخ ایجاد'
+    list_display = ('name', 'content', 'post', 'jalali_date', 'is_active')
+    list_filter = (
+        ('created_at', JDateFieldListFilter),
+        'is_active'
+        )
+    search_fields = ('name', 'email', 'content')
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(is_active=True)
+
+    
+
+
 class PostAdmin(admin.ModelAdmin):
+    def jalali_date(self, obj):
+        return obj.created_at.strftime("%d %b %Y %H:%M")
+    jalali_date.admin_order_field = 'created_at'
+    jalali_date.short_description = 'تاریخ ایجاد'    
+
+    
+    list_display = ('title', 'author' ,'jalali_date' ,'category', 'is_published')
+    list_filter = ('category', 'created_at', 'is_publlished', 'author')
+    search_fields = ('title', 'content')
+    # exclude = ('author',)
+    inlines = [
+        CommentInline,
+    ]
 
 
     list_filter = (
@@ -23,13 +72,19 @@ class PostAdmin(admin.ModelAdmin):
     #     'is_published',
 
     # ]
-    def save_model(self, request, obj, form, change):
-        obj.user = request.user
-        super().save_model(request, obj, form, change)
+
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'author':
+            kwargs['initial'] = request.user.id
+        return super(PostAdmin, self).formfield_for_foreignkey(
+            db_field, request, **kwargs
+        )
 
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'eng_title')
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
-admin.site.register(ShortIntro)
+admin.site.register(ShortIntro, ShortIntroAdmin)
+admin.site.register(Comment, CommentAdmin)

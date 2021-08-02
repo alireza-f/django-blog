@@ -3654,6 +3654,10 @@ fieldset:disabled .btn {
   margin-bottom: 0;
   list-style: none;
 }
+
+a.card-title-color{
+  color: #808080;
+}
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;

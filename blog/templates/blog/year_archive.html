@@ -3,10 +3,14 @@
 {%block title%} آرشیو سالانه {{ year }} {%endblock title%}
 
 {% block content %}
-<h1>پست‌های سال {{ year }}</h1>
 
 <br/>
-{% for post in yearly_archive %}
-   {% include 'blog/post_section.html' %}
-{% endfor %}
+{% if yearly_archive %}
+   <h1>پست‌های سال {{ year }}</h1>
+   {% for post in yearly_archive %}
+      {% include 'blog/post_section.html' %}
+   {% endfor %}
+{% else %}
+ <h1>متاسفانه برای سال {{ year }} پستی وجود نداره</h1>
+{% endif %}
 {% endblock content %}

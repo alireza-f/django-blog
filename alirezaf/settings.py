@@ -30,7 +30,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +43,14 @@ INSTALLED_APPS = [
     'blog',
     'django_jalali',
     'ckeditor',
+    'crispy_forms',
 ]
 
+
+default_app_config = 'blog.apps.BlogConfig'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 
 MIDDLEWARE = [
@@ -133,3 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LANGUAGE_CODE = 'fa-ir'
 locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 TIME_ZONE = 'Asia/Tehran'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+

@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+{% load jformat %}
+{block title} آرشیو سالانه {{ year }} {endblock title}
+
+{% block content %}
+<h1>پست‌های سال {{ year }}</h1>
+
+<br/>
+{% for post in yearly_archive %}
+   {% include 'blog/post_section.html' %}
+{% endfor %}
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% load jformat %}
+{block title} وبلاگ {endblock title}
+
+{% block content %}
+{% if posts %}
+{% for post in posts %}
+{% include 'blog/post_section.html' %}
+{% endfor %}
+{% endif %}
+{% endblock content %}

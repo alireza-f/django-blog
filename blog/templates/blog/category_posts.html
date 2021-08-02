@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load jformat %}
+{block title} دسته‌بندی {endblock title}
+
+{% block content %}
+<h1> پست‌های موجود در دسته‌بندی </h1>
+
+
+<br/>
+{% for post in category_posts %}
+    {% include 'blog/post_section.html' %}
+{% endfor %}
+{% endblock content %}

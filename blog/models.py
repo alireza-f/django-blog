@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.conf import settings
 from django_jalali.db import models as jmodels
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
+
 
 
 class Category(models.Model):
@@ -35,6 +37,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name="عنوان پست")
+    slug = models.SlugField(max_length=255)
     content = RichTextField(verbose_name="محتوای پست")
     category = models.ForeignKey(Category, verbose_name="انتخاب دسته‌بندی پست", on_delete=models.CASCADE)
     author = models.ForeignKey(
@@ -48,10 +51,17 @@ class Post(models.Model):
     published_at = jmodels.jDateTimeField(null=True, blank=True, editable=False, verbose_name="منتشر شده در تاریخ")
     # post_tag = models.ManyToManyField(PostTag, null=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = self.slug.replace(' ', '-')
+        super().save(*args, **kwargs)
+
+
     class Meta:
         verbose_name = "پست"
         verbose_name_plural = "پست‌ها"
         ordering = ["-created_at"]
+
+
 
     def publish(self):
         self.is_published = True
@@ -62,3 +72,13 @@ class Post(models.Model):
         return self.title
 
 
+class ShortIntro(models.Model):
+    title = models.CharField(max_length=25)
+    content = RichTextField(max_length=150)
+
+    class Meta:
+        verbose_name = 'درباره وبلاگ'
+        verbose_name_plural = 'درباره وبلاگ'
+
+    def __str__(self):
+        return self.title

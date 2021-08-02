@@ -1,9 +1,9 @@
 {% extends 'blog/base.html' %}
 {% load jformat %}
-{block title} دسته‌بندی {endblock title}
+{%block title%} دسته‌بندی {%endblock title%}
 
 {% block content %}
-<h1> پست‌های موجود در دسته‌بندی </h1>
+<h1> پست‌های موجود در دسته‌بندی «{{ cat_title }}» </h1>
 
 
 <br/>

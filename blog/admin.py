@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.db import models
-from blog.models import Post, Category
+from blog.models import Post, Category, ShortIntro
 from django_jalali.admin.filters import JDateFieldListFilter
 import django_jalali.admin as jadmin
 
@@ -32,3 +32,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(ShortIntro)

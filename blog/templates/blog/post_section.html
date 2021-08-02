@@ -1,7 +1,7 @@
 {% load jformat %}
 
 <article class="blog-post">
-  <h2 class="blog-post-title">{{ post.title }}</h2>
+  <h2 class="blog-post-title"><a href="{% url 'post-details' post.slug %}">{{ post.title }}</a></h2>
   <p class="blog-post-meta"> نوشته شده در تاریخ {{ post.created_at|jformat:"%A %d %B %Y" }} به‌دست <a href="#"> {{ post.author.first_name }} </a></p>
   {{ post.content|safe }}
 </article>

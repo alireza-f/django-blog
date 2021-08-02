@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import PostDetailView
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -7,5 +8,6 @@ urlpatterns = [
     path('archive/<int:year>/<int:month>/', views.month_archive, name='month-archive'),
     path('archive/<int:month>/<int:pk>', views.post_detail, name='post-detail'),
     path('category/<eng_title>/', views.category_posts, name='category-posts'),
+    path('<slug:slug>/', PostDetailView.as_view(), name='post-details'),
 
 ]

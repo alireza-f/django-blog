@@ -8,14 +8,14 @@ import django_jalali.admin as jadmin
 class ShortIntroAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
-    
+
 
 class CommentInline(admin.StackedInline):
     model = Comment
     classes = ['collapse']
     fieldsets = [
     ('Start Expanded', {
-    'fields': ['name', 'email', 'content'], 
+    'fields': ['name', 'email', 'content'],
     'classes': ['collapse in',]
     })
 ]
@@ -38,7 +38,6 @@ class CommentAdmin(admin.ModelAdmin):
     def approve_comments(self, request, queryset):
         queryset.update(is_active=True)
 
-    
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -52,6 +51,7 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('category', 'created_at', 'is_publlished', 'author')
     search_fields = ('title', 'content')
     # exclude = ('author',)
+    actions = ['publish_drafts']
     inlines = [
         CommentInline,
     ]
@@ -68,10 +68,15 @@ class PostAdmin(admin.ModelAdmin):
     #     'title',
     #     'content',
     #     'category',
+    #     'created_at',
+    #     'published_at',
     #     'author',
     #     'is_published',
 
     # ]
+
+    def publish_drafts(self, request, queryset):
+        queryset.update(is_published=True)
 
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):

@@ -10,11 +10,11 @@
 {% include 'blog/post_section.html' %}
 
 
-<div class="container">
+<div id="comment-section" class="container">
 	<div class="row">
-		<h5>کامنت‌ها ({{ comments.count }})</h5>
+		<small>کامنت‌ها ({{ comments.count }})</small>
 	</div>
-	
+	{% if comments %}
 	<hr>
     {% for comment in comments %}
 	<div class="row comment">
@@ -24,7 +24,7 @@
 	    <p>{{ comment.content| linebreaks }}</p>
 	</div>
     {% endfor %}
-	<hr>
+    {% endif %}
 <div class="row" id="addcomment">
 	    
     {% if new_comment %}
@@ -34,10 +34,11 @@
     {% else %}
     
     <form method="post" style="margin-top: 1.3em;">
-    <h5>ارسال کامنت</h5>
-        {{ comment_form|crispy|linebreaksbr }}
+    <h5 style="font-family: 'Oswald', sans-serif;">ارسال کامنت</h5>
+        {{ comment_form|crispy }}
+            <br/>
+
         {% csrf_token %}
-        <br/>
         <button type="submit" class="btn btn-primary btn-md">ثبت کامنت</button>
     </form>
     {% endif %}

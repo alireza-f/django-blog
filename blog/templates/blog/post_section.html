@@ -8,7 +8,6 @@
     <p class="blog-post-meta"> نوشته شده در تاریخ {{ post.created_at|jformat:"%A %d %B %Y" }} به‌دست <a href="#"> {{ post.author }} </a></p>
   {% endif %}
   {{ post.content|safe }}
-        <h6>کامنت‌ها ({{ post.comments.count }})</h6>
 
 </article>
 

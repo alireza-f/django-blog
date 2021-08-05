@@ -9,6 +9,8 @@
    <h1>پست‌های سال {{ year }}</h1>
    {% for post in yearly_archive %}
       {% include 'blog/post_section.html' %}
+      <small> کامنت‌ها (<a href="{% url 'post-details' post.slug %}#comment-section">{{ post.comments.count }}</a>)</small>
+        <hr/>
    {% endfor %}
 {% else %}
  <h1>متاسفانه برای سال {{ year }} پستی وجود نداره</h1>

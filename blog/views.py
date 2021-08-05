@@ -1,26 +1,40 @@
 from django.db import connection, models
-from blog.models import Post
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.views.generic import DetailView, UpdateView
+from django.core.paginator import Paginator
+
 from .models import Post, Category, ShortIntro
-import datetime
-from django.views.generic import DetailView
 from .forms import CommentForm
 
+import datetime
 
-# Create your views here.
+short_intro = {
+    'title' : 'Hello',
+    'content': 'heeeello',
+}
+
 
 def home(request):
-    posts = Post.objects.all
-    categories = Category.objects.all
-    a_list = Post.objects.filter(created_at__year=2021)
-    intro = ShortIntro.objects.get(id=1)
-    context = {
-        'monthly_archive' : a_list,
-        'posts': posts,
-        'categories' : categories,
-        'intro' : intro,
-    }
+    if request.method == 'GET':
+        posts = Post.objects.all()
+        if posts.count() > 5:
+            paginator = Paginator(posts, 5)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+        else:
+            page_obj = posts
+        
+        categories = Category.objects.all()
+        a_list = Post.objects.filter(created_at__year=2021)
+        intro = ShortIntro.objects.all()[0]
+        context = {
+            'monthly_archive' : a_list,
+            'posts': posts,
+            'categories' : categories,
+            'page_obj': page_obj,
+            'intro' : intro
+        }
     return render(request, 'blog/home.html', context)
 
 
@@ -28,9 +42,6 @@ def home(request):
 
 def year_archive(request, year):
     a_list = Post.objects.filter(created_at__year=year)
-    # a_list = get_object_or_404(Post, created_at__year=year)
-    # if not a_list:
-    #     return HttpResponse('<h1>Error 404</h1>')
     context = {
             'year' : year,
             'yearly_archive' : a_list,
@@ -48,9 +59,6 @@ def month_archive(request, year, month):
         'month_name' : month_name,
     }
     return render(request, 'blog/month_archive.html', context)
-
-def post_detail(request):
-    pass
 
 
 def category_posts(request, eng_title):
@@ -83,7 +91,14 @@ def post_detail(request, slug):
     else:
         comment_form = CommentForm()
 
-    return render(request, template_name, {'post': post,
-                                           'comments': comments,
-                                           'new_comment': new_comment,
-                                           'comment_form': comment_form})
+    context = {'post': post,
+                'comments': comments,
+                'new_comment': new_comment,
+                'comment_form': comment_form}
+
+    return render(request, template_name, context)
+
+
+# from django.contrib.auth.mixins import LoginRequiredMixin
+# class PostUpdateView(LoginMixinRequired,UpdateView):
+#     model = Post

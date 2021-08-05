@@ -23,17 +23,6 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f"/category/{self.eng_title}/"
 
-
-# class PostTag(models.Model):
-#     name = models.CharField(max_length=20)
-
-#     class Meta:
-#         verbose_name = "Tag"
-#         verbose_name_plural = "Tags"
-#         ordering = ["name"]
-
-
-
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name="عنوان پست")
     slug = models.SlugField(max_length=255)
@@ -72,8 +61,9 @@ class Post(models.Model):
 
 
 class ShortIntro(models.Model):
-    title = models.CharField(max_length=25)
-    content = RichTextField(max_length=150)
+    # pass
+    title = models.CharField(max_length=25, null=True)
+    content = RichTextField(max_length=150, null=True)
 
     class Meta:
         verbose_name = 'درباره وبلاگ'
@@ -81,7 +71,6 @@ class ShortIntro(models.Model):
 
     def __str__(self):
         return self.title
-
 
 
 class Comment(models.Model):
@@ -93,7 +82,7 @@ class Comment(models.Model):
     created_at = jmodels.jDateTimeField(auto_now_add=True, null=True, blank=True, editable=False, verbose_name='تاریخ ارسال')
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['-created_at']
         verbose_name = 'کامنت'
         verbose_name_plural = 'کامنت‌ها'
 

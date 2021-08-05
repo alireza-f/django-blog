@@ -13,16 +13,26 @@
 
 
     <!-- Bootstrap core CSS -->
-<link href="{% static 'blog/bootstrap.rtl.min.css' %}" rel="stylesheet">
+<link href="{% static 'blog/css/bootstrap.rtl.min.css' %}" rel="stylesheet">
 
-    <!-- Favicons -->
-{% comment %} <link rel="apple-touch-icon" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/apple-touch-icon.png" sizes="180x180"> {% endcomment %}
-{% comment %} <link rel="icon" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png"> {% endcomment %}
-{% comment %} <link rel="icon" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png"> {% endcomment %}
-{% comment %} <link rel="manifest" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/manifest.json"> {% endcomment %}
-{% comment %} <link rel="mask-icon" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/safari-pinned-tab.svg" color="#7952b3"> {% endcomment %}
-{% comment %} <link rel="icon" href="https://getbootstrap.com//docs/5.0/assets/img/favicons/favicon.ico"> {% endcomment %}
-{% comment %} <meta name="theme-color" content="#7952b3"> {% endcomment %}
+    <!-- Favicons created by https://www.favicon-generator.org/ --> 
+<link rel="apple-touch-icon" sizes="57x57" href="{% static 'blog/favicon/apple-icon-57x57.png' %}">
+<link rel="apple-touch-icon" sizes="60x60" href="{% static 'blog/favicon/apple-icon-60x60.png' %}">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'blog/favicon/apple-icon-72x72.png' %}">
+<link rel="apple-touch-icon" sizes="76x76" href="{% static 'blog/favicon/apple-icon-76x76.png' %}">
+<link rel="apple-touch-icon" sizes="114x114" href="{% static 'blog/favicon/apple-icon-114x114.png' %}">
+<link rel="apple-touch-icon" sizes="120x120" href="{% static 'blog/favicon/apple-icon-120x120.png' %}">
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'blog/favicon/apple-icon-144x144.png' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'blog/favicon/apple-icon-152x152.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'blog/favicon/apple-icon-180x180.png' %}">
+<link rel="icon" type="image/png" sizes="192x192"  href="{% static 'blog/favicon/android-icon-192x192.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'blog/favicon/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="96x96" href="{% static 'blog/favicon/favicon-96x96.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'blog/favicon/favicon-16x16.png' %}">
+<link rel="manifest" href="{% static 'blog/favicon/manifest.json' %}">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="{% static 'blog/favicon/ms-icon-144x144.png' %}">
+<meta name="theme-color" content="#ffffff">
 
 
     <style>
@@ -69,57 +79,18 @@
     </div>
   </header>
 
-  <div class="nav-scroller py-1 mb-2">
+  {% comment %} <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
       {% for category in categories %}
       <a class="p-2 link-secondary" href="{% url 'category-posts' category.eng_title %}">{{ category.title }}</a>
       {% endfor categories %}
-    </nav>
+    </nav> {% endcomment %}
   </div>
 </div>
 
 <main class="container">
-  <!-- <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
-    <div class="col-md-6 px-0">
-      <h1 class="display-4 fst-italic">عنوان تدوينة مميزة أطول</h1>
-      <p class="lead my-3">عدة أسطر نصية متعددة تعبر عن التدوية، وذلك لإعلام القراء الجدد بسرعة وكفاءة حول أكثر الأشياء إثارة للاهتمام في محتويات هذه التدوينة.</p>
-      <p class="lead mb-0"><a href="#" class="text-white fw-bold">أكمل القراءة...</a></p>
-    </div>
-  </div> -->
 
-  <!-- <div class="row mb-2">
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">العالم</strong>
-          <h3 class="mb-0">مشاركة مميزة</h3>
-          <div class="mb-1 text-muted">نوفمبر 12</div>
-          <p class="card-text mb-auto">هذه بطاقة أوسع مع نص داعم أدناه كمقدمة طبيعية لمحتوى إضافي.</p>
-          <a href="#" class="stretched-link">أكمل القراءة</a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
-
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">التصميم</strong>
-          <h3 class="mb-0">عنوان الوظيفة</h3>
-          <div class="mb-1 text-muted">نوفمبر 11</div>
-          <p class="mb-auto">هذه بطاقة أوسع مع نص داعم أدناه كمقدمة طبيعية لمحتوى إضافي.</p>
-          <a href="#" class="stretched-link">أكمل القراءة</a>
-        </div>
-        <div class="col-auto d-none d-lg-block">
-          <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: صورة مصغرة" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">صورة مصغرة</text></svg>
-
-        </div>
-      </div>
-    </div>
-  </div> -->
-
+<br/>
   <div class="row">
     <div class="col-md-8">
       <h3 class="pb-4 mb-4 fst-italic border-bottom">
@@ -139,31 +110,33 @@
           <h4 class="fst-italic">{{ intro.title }}</h4>
           <p class="mb-0">{{ intro.content | safe }}</div>
 
+
         <div class="p-4">
+          <h4 class="fst-italic">فهرست موضوعات</h4>
+          <ol class="list-unstyled mb-0">
+        {% for category in categories %}
+      <li><a href="{% url 'category-posts' category.eng_title %}" style="text-decoration:none">{{ category.title }}</a></li>
+      {% endfor categories %}
+      </ol>
+        </div> 
+
+        {% comment %} <div class="p-4">
           <h4 class="fst-italic">آرشیو</h4>
           <ol class="list-unstyled mb-0">
 
-            <li><a href="#">مارس 2021</a></li>
-            <li><a href="#">شباط 2021</a></li>
-            <li><a href="#">يناير 2021</a></li>
-            <li><a href="#">ديسمبر 2020</a></li>
-            <li><a href="#">نوفمبر 2020</a></li>
-            <li><a href="#">أكتوبر 2020</a></li>
-            <li><a href="#">سبتمبر 2020</a></li>
-            <li><a href="#">اغسطس 2020</a></li>
-            <li><a href="#">يوليو 2020</a></li>
-            <li><a href="#">يونيو 2020</a></li>
-            <li><a href="#">مايو 2020</a></li>
-            <li><a href="#">ابريل 2020</a></li>
+            <li><a href="#">دسامبر 2020</a></li>
+            <li><a href="#">نوامبر 2020</a></li>
+            <li><a href="#">اکتبر 2020</a></li>
+            <li><a href="#">سپتامبر 2020</a></li>
+
           </ol>
-        </div>
+        </div> {% endcomment %}
 
         <div class="p-4">
           <h4 class="fst-italic">در جاهای دیگر</h4>
           <ol class="list-unstyled">
-            <li><a href="#">GitHub</a></li>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Facebook</a></li>
+            <li><a href="https://github.com/alireza-f">GitHub</a></li>
+            <li><a href="https://t.me/Alireza71513">Telegram</a></li>
           </ol>
         </div>
       </div>

@@ -40,7 +40,7 @@ SECRET_KEY =  config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['185.190.39.144']
+ALLOWED_HOSTS = ['185.190.39.144', 'alirezaf.ir', 'www.alirezaf.ir']
 
 
 # Application definition

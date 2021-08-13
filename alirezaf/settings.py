@@ -38,10 +38,14 @@ STATICFILES_DIRS = (
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY =  config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['185.190.39.144', 'alirezaf.ir', 'www.alirezaf.ir']
 
+# DEBUG = False
+# ALLOWED_HOSTS = ['185.190.39.144', 'alirezaf.ir', 'www.alirezaf.ir']
+
+
+DEBUG = True
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -59,6 +63,7 @@ INSTALLED_APPS = [
     'django_jalali',
     'ckeditor',
     'crispy_forms',
+    'ckeditor_uploader',
 ]
 
 
@@ -174,5 +179,6 @@ TIME_ZONE = 'Asia/Tehran'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CKEDITOR_UPLOAD_PATH = "uploads/"

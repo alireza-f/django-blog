@@ -5,6 +5,8 @@ from django.conf import settings
 from django_jalali.db import models as jmodels
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from ckeditor_uploader.fields import RichTextUploadingField
+
 
 
 
@@ -26,7 +28,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name="عنوان پست")
     slug = models.SlugField(max_length=255)
-    content = RichTextField(verbose_name="محتوای پست")
+    content = RichTextUploadingField(verbose_name="محتوای پست")
     category = models.ForeignKey(Category, verbose_name="انتخاب دسته‌بندی پست", on_delete=models.CASCADE)
     author = models.ForeignKey(
         User,

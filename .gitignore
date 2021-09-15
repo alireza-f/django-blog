@@ -110,7 +110,8 @@ ENV/
 env.bak/
 venv.bak/
 .fandoghignore
-.yml
+*.yml
+fandogh.yml
 
 # Spyder project settings
 .spyderproject

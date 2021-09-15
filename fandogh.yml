@@ -1,0 +1,38 @@
+kind: ExternalService
+name: blog
+spec:
+  image_pull_policy: Always
+  port: 80
+  allow_http: false
+  env:
+    - name: LC_ALL
+      value: fa_IR
+    - name: LANG
+      value: fa_IR.UTF-8
+    - name: PostgreSQL_Host
+      value: blogdb-pq
+      hidden: true
+    - name: PostgreSQL_Password
+      value: POSTGRESQL_1254443
+      hidden: true
+    - name: PostgreSQL_User
+      value: postgres
+      hidden: true
+    - name: PostgreSQL_Name
+      value: blog
+      hidden: true
+    - name: SECRET_KEY
+      value: f8CVBN@@@^55ca2^&%3eUYTed312*(&^%$$#hjhgh5GFgh*&^%$$8711fdb45545f13b*&^%a18044
+      hidden: true
+  source:
+    context: .
+    media_path: media
+    project_type: django
+    python_version: '3.7'
+    static_path: static
+    wsgi: alirezaf.wsgi
+  volume_mounts:
+  - mount_path: /usr/src/app/media
+    sub_path: blog/media
+  domains:
+   - name: alirezaf.ir

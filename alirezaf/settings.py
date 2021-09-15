@@ -16,9 +16,7 @@ import os
 import json
 
 
-with open('/etc/config.json') as config_file:
-    config = json.load(config_file)
-
+SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET_KEY')
 
 
 
@@ -36,12 +34,15 @@ STATICFILES_DIRS = (
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  config['SECRET_KEY']
+# SECRET_KEY =  config['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
 DEBUG = False
-ALLOWED_HOSTS = ['185.190.39.144', 'alirezaf.ir', 'www.alirezaf.ir']
+if DEBUG:
+    ALLOWED_HOSTS = []
+else:
+    ALLOWED_HOSTS = ['alirezaf.ir', 'www.alirezaf.ir', 'blog-alirezafathi.fandogh.cloud', 'alirezafathi.ml']
 
 
 # DEBUG = True
@@ -108,25 +109,25 @@ WSGI_APPLICATION = 'alirezaf.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog',
-        'USER': '2',
-        'PASSWORD': '2',
-        'HOST': 'localhost',
-        'POST': '',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+        }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'blog',
+            'USER': 'postgres',
+            'PASSWORD': 'POSTGRESQL_1254443',
+            'HOST': 'blogdb-pq',
+        }
     }
-}
-'''
+
 
 
 # Password validation
@@ -173,7 +174,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LANGUAGE_CODE = 'fa-ir'
-locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
+# locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 TIME_ZONE = 'Asia/Tehran'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -182,3 +183,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = 'DENY'
+    # SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True # new
+    CSRF_COOKIE_SECURE = True # new
